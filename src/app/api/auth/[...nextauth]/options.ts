@@ -31,7 +31,9 @@ const authOptions: NextAuthOptions = {
           if (!user) throw new Error("No user found.");
 
           if (!user.isVerified)
-            throw new Error("Please verify your account before login.");
+            throw new Error(
+              "Please verify your account before you can sign in."
+            );
 
           const isPasswordCorrect = await bcrypt.compare(
             credentials.password,
