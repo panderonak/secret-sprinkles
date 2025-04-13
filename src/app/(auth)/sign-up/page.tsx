@@ -22,7 +22,7 @@ import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { signUpSchema } from "@/schemas/signUpSchema";
 import APIResponseInterface from "@/types/APIResponseInterface";
-import { Loader2 } from "lucide-react";
+import { Loader } from "lucide-react";
 
 export default function page() {
   const [username, setUsername] = useState("");
@@ -132,7 +132,7 @@ export default function page() {
                     />
                   </FormControl>
                   {isCheckingUsernameAvailability && (
-                    <Loader2 className="animate-spin" />
+                    <Loader className="animate-spin" />
                   )}
                   <FormMessage children={message} />
                 </FormItem>
@@ -170,15 +170,14 @@ export default function page() {
               )}
             />
             <Button
-              className="bg-primary text-primary-foreground hover:bg-primary/80 focus:ring focus:ring-ring border"
+              className="relative bg-primary text-primary-foreground hover:bg-primary/80 focus:ring focus:ring-ring border"
               type="submit"
               disabled={isSubmitting}
             >
-              {isSubmitting ? (
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-              ) : (
-                "Sign Up"
+              {isSubmitting && (
+                <Loader className="absolute inset-0 m-auto h-4 w-4 animate-spin" />
               )}
+              <span className={isSubmitting ? "invisible" : ""}>Sign In</span>
             </Button>
           </form>
         </Form>
