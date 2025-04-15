@@ -112,7 +112,7 @@ export default function page() {
         <div className="text-center mt-4">
           <p>
             <span className="text-zinc-500">Don't have an account? </span>
-            <Link href="/sign-in" className="text-primary hover:underline">
+            <Link href="/sign-up" className="text-primary hover:underline">
               Sign up
             </Link>
           </p>
