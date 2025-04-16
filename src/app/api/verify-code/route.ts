@@ -17,7 +17,9 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     const decodedUsername = decodeURIComponent(username);
 
-    const result = UsernameQuerySchema.safeParse(decodedUsername);
+    const result = UsernameQuerySchema.safeParse({
+      accountUsername: decodedUsername,
+    });
 
     if (!result.success) {
       const usernameErrors = result.error.format().accountUsername?._errors;
