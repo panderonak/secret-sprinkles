@@ -48,7 +48,7 @@ export default function page() {
   });
 
   useEffect(() => {
-    const checkUsernameAvailability = async () => {
+    async function checkUsernameAvailability() {
       if (username) {
         setIsCheckingUsernameAvailability(true);
         setMessage("");
@@ -71,12 +71,12 @@ export default function page() {
           setIsCheckingUsernameAvailability(false);
         }
       }
-    };
+    }
 
     checkUsernameAvailability();
   }, [username]);
 
-  const onSubmit = async (data: z.infer<typeof signUpSchema>) => {
+  async function onSubmit(data: z.infer<typeof signUpSchema>) {
     setIsSubmitting(true);
     try {
       const response = await axios.post<APIResponseInterface>(
@@ -100,7 +100,7 @@ export default function page() {
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-background  text-foreground">
