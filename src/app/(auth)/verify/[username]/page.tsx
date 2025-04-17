@@ -40,13 +40,13 @@ export default function page() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const onSubmit = async (data: z.infer<typeof verificationSchema>) => {
+  async function onSubmit(data: z.infer<typeof verificationSchema>) {
     try {
       setIsSubmitting(true);
 
       const response = await axios.post(`/api/verify-code`, {
         username: params.username,
-        ...data,
+        code: data.code,
       });
 
       if (response.data.success) toast.success(response.data.message);
@@ -66,7 +66,7 @@ export default function page() {
     } finally {
       setIsSubmitting(false);
     }
-  };
+  }
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-background  text-foreground">
