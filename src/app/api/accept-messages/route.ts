@@ -38,7 +38,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     if (!updatedUser) {
       const responseBody: APIResponseInterface = {
         success: false,
-        message: `We're currently experiencing issues updating the user's status to accept messages. Please try again shortly.`,
+        message: `We're currently experiencing issues updating your message settings!. Please try again shortly.`,
       };
 
       return NextResponse.json(responseBody, { status: 401 });
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     const responseBody: APIResponseInterface = {
       success: true,
-      message: `Your message acceptance settings have been updated successfully.`,
+      message: `You're all set — we've updated your message settings!`,
       data: updatedUser,
     };
 
@@ -97,7 +97,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     const responseBody: APIResponseInterface = {
       success: true,
-      message: `We couldn't find the user you're looking for. Double-check the details and give it another try!`,
+      message: `You're all set — here's your current message settings!`,
       isAcceptingMessages: retrievedUser.isAcceptingMessage,
     };
 
