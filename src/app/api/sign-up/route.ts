@@ -102,8 +102,10 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
     };
 
     return NextResponse.json(responseBody, { status: 201 });
-  } catch (error) {
-    console.error(`An error occurred while registering the user: ${error}`);
+  } catch (error: any) {
+    console.error(
+      `An error occurred while registering the user: ${error}. Stack trace: ${error.stack || "No stack trace available"}`
+    );
 
     const responseBody: APIResponseInterface = {
       success: false,
