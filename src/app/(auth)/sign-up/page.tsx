@@ -80,9 +80,10 @@ export default function page() {
     setIsSubmitting(true);
     try {
       const response = await axios.post<APIResponseInterface>(
-        `/api/sign-up`,
+        "/api/sign-up",
         data
       );
+
       if (response.data.success) toast.success(response.data.message);
 
       router.replace(`/verify/${username}`);
@@ -103,7 +104,7 @@ export default function page() {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-background  text-foreground">
+    <div className="flex justify-center items-center min-h-screen bg-background text-foreground">
       <div className="w-full max-w-md p-8 space-y-8 rounded-[var(--radius)] shadow-md bg-card text-card-foreground">
         <div className="text-center">
           <h1 className="text-md font-extrabold tracking-tight lg:text-3xl mb-3">
