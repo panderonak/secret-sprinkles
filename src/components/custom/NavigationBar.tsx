@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "../ui/button";
 import { useSession, signOut } from "next-auth/react";
 import { User } from "next-auth";
+import { ThemeSwitcher } from "./ThemeSwitcher";
 
 export default function NavigationBar() {
   const { data: session, status } = useSession();
@@ -32,6 +33,9 @@ export default function NavigationBar() {
                     <Button>Sign In</Button>
                   </Link>
                 )}
+              </NavbarItem>
+              <NavbarItem>
+                <ThemeSwitcher />
               </NavbarItem>
             </NavbarContent>
           </div>
