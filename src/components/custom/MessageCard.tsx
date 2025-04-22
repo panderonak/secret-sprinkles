@@ -13,10 +13,23 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Button } from "@/components/ui/button";
 import { Message } from "@/models/message.models";
-import { Card, CardHeader, CardBody, CardFooter } from "@heroui/card";
+import { Card, CardBody } from "@heroui/card";
 import axios from "axios";
-import { Trash } from "lucide-react";
+import { EllipsisVerticalIcon, Trash } from "lucide-react";
 import { toast } from "sonner";
+
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
+import { Roboto } from "next/font/google";
+
+const roboto = Roboto({
+  subsets: ["latin"],
+  variable: "--font-roboto",
+});
 
 type MessageCardProps = {
   message: Message;
@@ -36,34 +49,57 @@ export default function MessageCard({
   };
 
   return (
-    <Card>
-      <CardBody>
-        <p>{message.content}</p>
-      </CardBody>
-      <CardFooter>
-        <AlertDialog>
-          <AlertDialogTrigger asChild>
-            <Button variant="destructive">
-              <Trash /> Delete
+    <Card className="relative border border-[var(--border)] rounded-xl shadow-sm hover:shadow-md transition-shadow bg-card text-card-foreground pr-5">
+      <div className="absolute top-2 right-2 z-10">
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              className="rounded-full size-8 p-0 flex items-center justify-center border border-muted-foreground/20 hover:bg-muted"
+              variant="ghost"
+              aria-label="More options"
+            >
+              <EllipsisVerticalIcon className="w-5 h-5" />
             </Button>
-          </AlertDialogTrigger>
-          <AlertDialogContent>
-            <AlertDialogHeader>
-              <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-              <AlertDialogDescription>
-                This action cannot be undone. This will permanently delete the
-                message and remove it from our servers.
-              </AlertDialogDescription>
-            </AlertDialogHeader>
-            <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
-              <AlertDialogAction onClick={handleDelete}>
-                Continue
-              </AlertDialogAction>
-            </AlertDialogFooter>
-          </AlertDialogContent>
-        </AlertDialog>
-      </CardFooter>
+          </PopoverTrigger>
+          <PopoverContent align="end" className="w-[160px] p-2">
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button
+                  variant="destructive"
+                  className="w-full justify-start gap-2"
+                  aria-label="Delete message"
+                >
+                  <Trash className="w-4 h-4" />
+                  Delete
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This will permanently delete the message from our servers.
+                    This action cannot be undone.
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel>Cancel</AlertDialogCancel>
+                  <AlertDialogAction onClick={handleDelete}>
+                    Delete
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
+          </PopoverContent>
+        </Popover>
+      </div>
+
+      <CardBody className="px-6 py-5 flex flex-col gap-4">
+        <p
+          className={`${roboto.variable} text-base text-black dark:text-[var(--foreground)]`}
+        >
+          {message.content}
+        </p>
+      </CardBody>
     </Card>
   );
 }
