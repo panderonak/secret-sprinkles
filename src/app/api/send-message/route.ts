@@ -40,7 +40,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
       message: `Your message has been sent successfully!`,
     };
 
-    return NextResponse.json(responseBody, { status: 200 });
+    return NextResponse.json(responseBody, { status: 201 });
   } catch (error: any) {
     console.error(
       `An error occurred while sending the message. Details: ${error.message || error}. Stack trace: ${error.stack || "No stack trace available"}`
