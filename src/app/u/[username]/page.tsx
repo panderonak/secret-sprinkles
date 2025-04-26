@@ -19,6 +19,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
+import { useCompletion } from "@ai-sdk/react";
 
 export default function page() {
   const params = useParams<{ username: string }>();
@@ -29,6 +30,8 @@ export default function page() {
       content: "",
     },
   });
+
+  const {} = form;
 
   const [isSending, setIsSending] = useState(false);
 
@@ -68,8 +71,12 @@ export default function page() {
     }
   }
 
+  const { completion, input, handleInputChange, handleSubmit } = useCompletion({
+    api: "api/message-suggestions",
+  });
+
   return (
-    <div className="mx-auto max-w-7xl px-10 py-12 sm:px-6 lg:px-8">
+    <div className="mx-auto max-w-7xl px-10 py-12 sm:px-6 lg:px-8 h-screen">
       <div className="mx-auto max-w-2xl text-center">
         <h2 className="text-4xl font-medium tracking-tight text-balance text-primary sm:text-5xl">
           Public Profile
@@ -126,6 +133,19 @@ export default function page() {
           </div>
         </form>
       </Form>
+
+      <div className="bg-green-300">
+        <form onSubmit={handleSubmit}>
+          <input
+            name="prompt"
+            value={input}
+            onChange={handleInputChange}
+            id="input"
+          />
+          <button type="submit">Submit</button>
+          <div>{completion}</div>
+        </form>
+      </div>
     </div>
   );
 }
