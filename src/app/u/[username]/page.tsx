@@ -21,6 +21,12 @@ import { toast } from "sonner";
 import * as z from "zod";
 import { useCompletion } from "@ai-sdk/react";
 
+const specialChar = "||";
+
+const splitMessages = (delimitedMessages: string): string[] => {
+  return delimitedMessages.split(specialChar);
+};
+
 export default function page() {
   const params = useParams<{ username: string }>();
 
@@ -31,7 +37,9 @@ export default function page() {
     },
   });
 
-  const {} = form;
+  const { watch, setValue, reset } = form;
+
+  const messageContent = watch("content");
 
   const [isSending, setIsSending] = useState(false);
 
@@ -71,7 +79,15 @@ export default function page() {
     }
   }
 
-  const { completion, input, handleInputChange, handleSubmit } = useCompletion({
+  const {
+    completion,
+    input,
+    handleInputChange,
+    handleSubmit,
+    isLoading,
+    error,
+    complete,
+  } = useCompletion({
     api: "api/message-suggestions",
   });
 
