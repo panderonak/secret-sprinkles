@@ -20,7 +20,11 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 import { useCompletion } from "@ai-sdk/react";
-
+import Link from "next/link";
+import { Separator } from "@/components/ui/separator";
+import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
+import { Image } from "@heroui/image";
+import { RetroGrid } from "@/components/magicui/retro-grid";
 const specialChar = "||";
 
 const splitMessages = (delimitedMessages: string): string[] => {
@@ -36,10 +40,6 @@ export default function page() {
       content: "",
     },
   });
-
-  const { watch, setValue, reset } = form;
-
-  const messageContent = watch("content");
 
   const [isSending, setIsSending] = useState(false);
 
@@ -76,23 +76,40 @@ export default function page() {
       );
     } finally {
       setIsSending(false);
+      reset();
     }
   }
 
-  const {
-    completion,
-    input,
-    handleInputChange,
-    handleSubmit,
-    isLoading,
-    error,
-    complete,
-  } = useCompletion({
-    api: "api/message-suggestions",
+  const initialMessageString =
+    "What's your favorite movie?||Do you have any pets?||What's your dream job?";
+
+  const { completion, isLoading, error, complete } = useCompletion({
+    api: "/api/message-suggestions",
+    initialCompletion: initialMessageString,
+    onFinish: () => {
+      toast.success("These are the questions you requested. Hope they help!");
+    },
+    onError: () => {
+      toast.error(
+        "We’re having trouble sending the questions. Please try again shortly."
+      );
+    },
   });
 
+  async function suggestMessages() {
+    complete("");
+  }
+
+  const { watch, setValue, reset } = form;
+
+  const messageContent = watch("content");
+
+  const handleMessageClick = (message: string) => {
+    setValue("content", message);
+  };
+
   return (
-    <div className="mx-auto max-w-7xl px-10 py-12 sm:px-6 lg:px-8 h-screen">
+    <div className="mx-auto max-w-7xl px-8 py-12">
       <div className="mx-auto max-w-2xl text-center">
         <h2 className="text-4xl font-medium tracking-tight text-balance text-primary sm:text-5xl">
           Public Profile
@@ -109,38 +126,36 @@ export default function page() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="mx-auto mt-16 max-w-xl sm:mt-20"
+          className="mt-12 mx-auto max-w-2xl"
         >
-          <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
-            <div className="sm:col-span-2">
-              <FormField
-                name="content"
-                control={form.control}
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="block font-semibold">
-                      Message
-                    </FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Type your message here..."
-                        className="min-h-[120px] resize-none mt-2.5"
-                        maxLength={280}
-                        {...field}
-                      />
-                    </FormControl>
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
+          <FormField
+            name="content"
+            control={form.control}
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className=" font-semibold">Message</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Type your message here..."
+                    className="min-h-[120px] resize-none mt-2.5"
+                    maxLength={280}
+                    {...field}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
 
-          <div className="flex justify-end mt-6">
+          <div className="flex justify-end items-center space-x-3">
             <Button
-              className="relative bg-primary text-primary-foreground hover:bg-primary/80 focus:ring focus:ring-ring border"
-              type="submit"
-              disabled={isSending}
+              onClick={suggestMessages}
+              className="my-4"
+              disabled={isLoading}
             >
+              Suggest Messages
+            </Button>
+
+            <Button type="submit" disabled={isSending || !messageContent}>
               {isSending && (
                 <Loader className="absolute inset-0 m-auto h-4 w-4 animate-spin" />
               )}
@@ -150,17 +165,60 @@ export default function page() {
         </form>
       </Form>
 
-      <div className="bg-green-300">
-        <form onSubmit={handleSubmit}>
-          <input
-            name="prompt"
-            value={input}
-            onChange={handleInputChange}
-            id="input"
-          />
-          <button type="submit">Submit</button>
-          <div>{completion}</div>
-        </form>
+      <div className="my-12 mx-auto max-w-2xl">
+        <Card>
+          <CardHeader>
+            <h3 className="text-md font-semibold mb-4">
+              Not Sure What to Say? We've Got You
+            </h3>
+          </CardHeader>
+          <CardBody className="flex flex-wrap gap-3 p-6">
+            {error ? (
+              <p className="text-red-500">{error.message}</p>
+            ) : (
+              splitMessages(completion).map((message, index) => (
+                <Button
+                  key={index}
+                  variant="outline"
+                  className="inline-block bg-muted px-4 py-1 rounded-full text-sm cursor-pointer hover:bg-muted/50"
+                  onClick={() => handleMessageClick(message)}
+                >
+                  {message}
+                </Button>
+              ))
+            )}
+          </CardBody>
+        </Card>
+      </div>
+
+      <div className="py-14 mx-auto max-w-7xl mb-12 px-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+          <Card className="bg-card rounded-3xl shadow-lg h-full">
+            <CardBody className="text-center flex items-center justify-center h-full">
+              <p className="mb-6 text-lg font-semibold leading-7 px-4">
+                Sign up to get your own message board and start receiving
+                anonymous messages from friends and others!
+              </p>
+              <Link href={"/sign-up"}>
+                <Button className="px-8 py-3 bg-primary">
+                  Get Started – It’s Free!
+                </Button>
+              </Link>
+            </CardBody>
+            <RetroGrid />
+          </Card>
+
+          <Card className="bg-card rounded-3xl overflow-hidden shadow-lg">
+            <CardBody>
+              <Image
+                alt="Card background"
+                className="w-full h-full object-cover"
+                src="/pexels-adrien-olichon.jpg"
+                width="full"
+              />
+            </CardBody>
+          </Card>
+        </div>
       </div>
     </div>
   );
