@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/popover";
 
 import { Roboto } from "next/font/google";
+import dayjs from "dayjs";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -98,6 +99,9 @@ export default function MessageCard({
           className={`${roboto.variable} text-base text-black dark:text-[var(--foreground)]`}
         >
           {message.content}
+        </p>
+        <p className="mt-2 text-sm font-semibold">
+          {dayjs(message.createdAt).format("MMM D, YYYY h:mm A")}
         </p>
       </CardBody>
     </Card>
