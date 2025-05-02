@@ -25,6 +25,7 @@ import { Separator } from "@/components/ui/separator";
 import { Card, CardBody, CardFooter, CardHeader } from "@heroui/card";
 import { Image } from "@heroui/image";
 import { RetroGrid } from "@/components/magicui/retro-grid";
+
 const specialChar = "||";
 
 const splitMessages = (delimitedMessages: string): string[] => {
@@ -81,7 +82,7 @@ export default function page() {
   }
 
   const initialMessageString =
-    "What's your favorite movie?||Do you have any pets?||What's your dream job?";
+    "What’s a small moment from your week that made you smile?||If you could instantly master any skill or talent, what would you choose and why?||What’s a place you’ve never been to but feel drawn to explore?";
 
   const { completion, isLoading, error, complete } = useCompletion({
     api: "/api/message-suggestions",
@@ -166,21 +167,22 @@ export default function page() {
       </Form>
 
       <div className="my-12 mx-auto max-w-2xl">
-        <Card>
-          <CardHeader>
-            <h3 className="text-md font-semibold mb-4">
+        <Card className="bg-background shadow-lg rounded-2xl">
+          <CardHeader className="text-center px-6 pt-6">
+            <h3 className="text-xl font-bold text-foreground">
               Not Sure What to Say? We've Got You
             </h3>
           </CardHeader>
-          <CardBody className="flex flex-wrap gap-3 p-6">
+
+          <CardBody className="flex flex-col items-center gap-4 px-6 py-8">
             {error ? (
-              <p className="text-red-500">{error.message}</p>
+              <p className="text-red-500 text-sm">{error.message}</p>
             ) : (
               splitMessages(completion).map((message, index) => (
                 <Button
                   key={index}
                   variant="outline"
-                  className="inline-block bg-muted px-4 py-1 rounded-full text-sm cursor-pointer hover:bg-muted/50"
+                  className="w-full h-auto md:w-auto text-sm font-medium text-center break-words whitespace-normal bg-muted px-5 py-2.5 rounded-full cursor-pointer hover:bg-muted/50 transition-colors"
                   onClick={() => handleMessageClick(message)}
                 >
                   {message}
@@ -191,32 +193,19 @@ export default function page() {
         </Card>
       </div>
 
-      <div className="py-14 mx-auto max-w-7xl mb-12 px-5">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+      <div className="py-14 mx-auto max-w-2xl mb-12 px-5">
+        <div className="grid grid-cols-1 place-content-center">
           <Card className="bg-card rounded-3xl shadow-lg h-full">
-            <CardBody className="text-center flex items-center justify-center h-full">
+            <CardBody className="text-center flex items-center justify-center px-6 py-12 h-64">
               <p className="mb-6 text-lg font-semibold leading-7 px-4">
                 Sign up to get your own message board and start receiving
                 anonymous messages from friends and others!
               </p>
               <Link href={"/sign-up"}>
-                <Button className="px-8 py-3 bg-primary">
-                  Get Started – It’s Free!
-                </Button>
+                <Button className="px-8 py-3">Get Started – It’s Free!</Button>
               </Link>
             </CardBody>
             <RetroGrid />
-          </Card>
-
-          <Card className="bg-card rounded-3xl overflow-hidden shadow-lg">
-            <CardBody>
-              <Image
-                alt="Card background"
-                className="w-full h-full object-cover"
-                src="/pexels-adrien-olichon.jpg"
-                width="full"
-              />
-            </CardBody>
           </Card>
         </div>
       </div>
