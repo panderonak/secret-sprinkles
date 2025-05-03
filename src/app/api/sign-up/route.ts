@@ -2,6 +2,8 @@ import { verificationEmailSender } from "@/helpers/verificationEmailSender";
 import dbConnection from "@/lib/dbConnection";
 import UserModel from "@/models/user.models";
 import APIResponseInterface from "@/types/APIResponseInterface";
+import { signUpSchema } from "@/schemas/signUpSchema";
+import * as z from "zod";
 import bcrypt from "bcryptjs";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -9,7 +11,8 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   await dbConnection();
 
   try {
-    const { username, email, password } = await request.json();
+    const body = await request.json();
+    const { username, email, password } = signUpSchema.parse(body);
 
     // Handles the case where the username is already taken and has been verified.
 
@@ -103,6 +106,17 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     return NextResponse.json(responseBody, { status: 201 });
   } catch (error: any) {
+    if (error instanceof z.ZodError) {
+      // Handle Zod validation errors
+
+      const responseBody: APIResponseInterface = {
+        success: false,
+        message: `t looks like some of the input data isn’t valid. Please double-check and try again.`,
+      };
+
+      return NextResponse.json(responseBody, { status: 400 });
+    }
+
     console.error(
       `An error occurred while registering the user: ${error}. Stack trace: ${error.stack || "No stack trace available"}`
     );
