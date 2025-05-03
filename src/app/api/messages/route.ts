@@ -32,13 +32,22 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       { $group: { _id: "$_id", messages: { $push: "$messages" } } },
     ]);
 
-    if (!userDetails || userDetails.length < 1) {
+    if (!userDetails) {
       const responseBody: APIResponseInterface = {
         success: false,
         message: `We couldn't find the user you're looking for. Please check the details and try again.`,
       };
 
       return NextResponse.json(responseBody, { status: 404 });
+    }
+
+    if (userDetails.length < 1) {
+      const responseBody: APIResponseInterface = {
+        success: false,
+        message: `Looks like there's nothing to show right now.`,
+      };
+
+      return NextResponse.json(responseBody, { status: 200 });
     }
 
     // Change
