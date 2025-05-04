@@ -41,9 +41,10 @@ export default function page() {
     console.log(`Next Auth sign in response:: ${response}`);
 
     if (response?.error) {
-      if (response.error == "CredentialsSignin") {
-        toast.error(response.error || "Incorrect credentials.");
-      }
+      toast.error(
+        response?.error?.replace(/^Error:\s*/, "") || "Incorrect credentials."
+      );
+      setIsSubmitting(false);
     }
 
     if (response?.url) {
