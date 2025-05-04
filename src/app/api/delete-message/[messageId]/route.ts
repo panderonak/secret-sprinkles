@@ -11,7 +11,7 @@ export async function DELETE(
   { params }: { params: { messageId: string } }
 ): Promise<NextResponse> {
   try {
-    const messageId = params.messageId;
+    const { messageId } = await params;
     await dbConnection();
 
     const session = await getServerSession(authOptions);
