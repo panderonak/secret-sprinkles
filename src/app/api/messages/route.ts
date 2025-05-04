@@ -36,6 +36,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
       const responseBody: APIResponseInterface = {
         success: false,
         message: `We couldn't find the user you're looking for. Please check the details and try again.`,
+        messages: [],
       };
 
       return NextResponse.json(responseBody, { status: 404 });
@@ -43,14 +44,13 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
 
     if (userDetails.length < 1) {
       const responseBody: APIResponseInterface = {
-        success: false,
+        success: true,
         message: `Looks like there's nothing to show right now.`,
       };
 
       return NextResponse.json(responseBody, { status: 200 });
     }
 
-    // Change
     const responseBody: APIResponseInterface = {
       success: true,
       message: `Your message(s) have been received successfully!`,
