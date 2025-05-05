@@ -34,6 +34,8 @@ export default function page() {
   const [isCheckingUsernameAvailability, setIsCheckingUsernameAvailability] =
     useState(false);
 
+  const [isUsernameAvailable, setIsUsernameAvailable] = useState(false);
+
   const debounced = useDebounceCallback(setUsername, 500);
 
   const router = useRouter();
@@ -51,6 +53,7 @@ export default function page() {
     async function checkUsernameAvailability() {
       if (username) {
         setIsCheckingUsernameAvailability(true);
+        setIsUsernameAvailable(false);
         setMessage("");
         try {
           const response = await axios.get<APIResponseInterface>(
@@ -58,6 +61,8 @@ export default function page() {
           );
           console.log(`Response: ${response}`);
           setMessage(response.data.message);
+          console.log(response.data);
+          setIsUsernameAvailable(response?.data?.success);
         } catch (error) {
           const axiosError = error as AxiosError<APIResponseInterface>;
 
@@ -133,9 +138,12 @@ export default function page() {
                     />
                   </FormControl>
                   {isCheckingUsernameAvailability && (
-                    <Loader className="animate-spin" />
+                    <Loader className="animate-spin duration-200" />
                   )}
-                  <FormMessage children={message} />
+                  <FormMessage
+                    className={`${isUsernameAvailable ? "text-green-500" : "text-red-500"}`}
+                    children={message}
+                  />
                 </FormItem>
               )}
             />
