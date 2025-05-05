@@ -1,6 +1,7 @@
 import { MarqueeSection } from "@/components/custom/MarqueeSection";
 import { Heart } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -11,7 +12,7 @@ export default function Home() {
             Discover What Others Think —{" "}
             <span className="text-[#8c8c8c] font-medium">Anonymously.</span>
           </h1>
-          <p className="mt-4 text-lg md:text-xl max-w-2xl mx-auto text-[#081108]">
+          <p className="mt-4 text-lg md:text-xl max-w-2xl mx-auto text-[#081108] px-5">
             Ever wondered what people really think? Invite friends, colleagues,
             or followers to send you anonymous messages—honestly, thoughtfully,
             or just for fun.
@@ -53,8 +54,17 @@ export default function Home() {
           </p>
           <p className="text-sm md:text-base flex justify-center items-center gap-1">
             Made with
-            <Heart className="fill-red-500 h-5 w-5" aria-label="love" />
-            by the <span className="font-semibold">True Feedback</span> team.
+            <Heart
+              className="fill-red-500 stroke-red-500 h-5 w-5"
+              aria-label="love"
+            />
+            by
+            <span className="font-semibold hover:underline">
+              <Link href={"https://x.com/panderonakdev"}>
+                &#64;panderonakdev
+              </Link>{" "}
+              in Jaipur.
+            </span>
           </p>
         </div>
       </footer>
