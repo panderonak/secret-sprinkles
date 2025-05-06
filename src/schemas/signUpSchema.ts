@@ -15,6 +15,15 @@ export const usernameValidation = z
       "Username must start with a letter and use only letters, numbers, underscores, or hyphens.",
   });
 
+export const passwordValidation = z
+  .string()
+  .min(8, { message: "Password must be at least 8 characters." })
+  .max(64, { message: "Password cannot exceed 64 characters." })
+  .regex(PASSWORD_REGEX, {
+    message:
+      "Password must include an uppercase letter, a lowercase letter, a number, and a special character (@$!%*?&).",
+  });
+
 export const signUpSchema = z.object({
   username: usernameValidation,
   email: z
