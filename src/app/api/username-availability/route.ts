@@ -13,18 +13,12 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   await dbConnection();
   try {
     const { searchParams } = new URL(request.url);
-    console.log(`Search params: ${searchParams}`); // TODO: Remember to remove this log before going live!
 
     const queryParam = {
       username: searchParams.get("username"),
     };
-    console.log(`Received query parameters: ${queryParam}`); // TODO: Remember to remove this log before going live!
 
     const result = UsernameQuerySchema.safeParse(queryParam);
-
-    console.log(
-      `Result of validating query parameters with UsernameQuerySchema ${result}`
-    ); // TODO: Remember to remove this log before going live!
 
     if (!result.success) {
       const usernameErrors = result.error.format().username?._errors;
@@ -53,7 +47,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         message: `This username is already taken. Please choose another one.`,
       };
 
-      return NextResponse.json(responseBody, { status: 400 });
+      return NextResponse.json(responseBody, { status: 409 });
     }
 
     const responseBody: APIResponseInterface = {

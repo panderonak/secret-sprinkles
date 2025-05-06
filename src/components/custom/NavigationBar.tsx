@@ -10,8 +10,6 @@ import { ThemeSwitcher } from "./ThemeSwitcher";
 export default function NavigationBar() {
   const { data: session, status } = useSession();
 
-  console.log(`Nav bar: ${status}`);
-
   const user: User = session?.user as User;
 
   return (

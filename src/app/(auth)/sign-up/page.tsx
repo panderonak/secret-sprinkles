@@ -59,9 +59,7 @@ export default function page() {
           const response = await axios.get<APIResponseInterface>(
             `/api/username-availability?username=${username}`
           );
-          console.log(`Response: ${response}`);
           setMessage(response.data.message);
-          console.log(response.data);
           setIsUsernameAvailable(response?.data?.success);
         } catch (error) {
           const axiosError = error as AxiosError<APIResponseInterface>;

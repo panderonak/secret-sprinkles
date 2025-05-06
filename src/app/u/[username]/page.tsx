@@ -45,13 +45,9 @@ export default function page() {
   const [isSending, setIsSending] = useState(false);
 
   async function onSubmit(data: z.infer<typeof messageSchema>) {
-    console.log(data);
     setIsSending(true);
 
-    console.log(params);
-
     try {
-      console.log("Before Response");
       const response = await axios.post<APIResponseInterface>(
         "/api/send-message",
         {
@@ -59,7 +55,7 @@ export default function page() {
           username: params.username,
         }
       );
-      console.log("After Response");
+
       toast.success(
         response.data.message ||
           "You're all set — we've updated your message settings!"

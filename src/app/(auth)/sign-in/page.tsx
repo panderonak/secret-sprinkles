@@ -38,8 +38,6 @@ export default function page() {
 
     const response = await signIn("credentials", { redirect: false, ...data });
 
-    console.log(`Next Auth sign in response:: ${response}`);
-
     if (response?.error) {
       toast.error(
         response?.error?.replace(/^Error:\s*/, "") || "Incorrect credentials."
