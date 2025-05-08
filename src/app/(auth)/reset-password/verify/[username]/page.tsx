@@ -51,7 +51,7 @@ export default function page() {
 
       if (response.data.success) toast.success(response.data.message);
 
-      router.replace("/reset-password");
+      router.replace(`/reset-password/${params.username}`);
     } catch (error: any) {
       const axiosError = error as AxiosError<APIResponseInterface>;
       let errorMessage =
