@@ -111,7 +111,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
       const responseBody: APIResponseInterface = {
         success: false,
-        message: `t looks like some of the input data isn’t valid. Please double-check and try again.`,
+        message: `It looks like some of the input data isn’t valid. Please double-check and try again.`,
       };
 
       return NextResponse.json(responseBody, { status: 400 });
