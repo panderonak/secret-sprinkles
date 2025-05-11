@@ -1,36 +1,148 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Secret Sprinkles
 
-## Getting Started
+Secret Sprinkles is a web platform where users can create accounts, receive a public URL to share with others, and collect anonymous messages. The platform enhances user experience with AI-powered message suggestions and provides a dashboard for users to view and manage their messages. Built with Next.js, Secret Sprinkles offers secure authentication, email verification, and a responsive, themeable UI, making it easy to send and receive anonymous feedback or messages.
 
-First, run the development server:
+## Table of Contents
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- [Features](#features)
+- [Technologies](#technologies)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Configuration](#configuration)
+- [API Routes](#api-routes)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+
+## Features
+
+- **User Accounts and Public URLs**: Create an account to get a unique public URL for receiving anonymous messages.
+- **Anonymous Messaging**: Allow anyone to send messages via your public URL without revealing their identity.
+- **AI-Powered Suggestions**: Generate creative message ideas using OpenAI’s GPT-3.5-turbo model.
+- **User Dashboard**: View, accept, toggle, or delete messages with a clean, interactive interface.
+- **Secure Authentication**: Sign up, sign in, and reset passwords with NextAuth, Zod validation, and bcrypt hashing.
+- **Email Verification**: Receive personalized OTP emails for account verification and password resets using Resend.
+- **Responsive UI**: Enjoy a modern, accessible interface with shadcn/ui, DaisyUI, and a theme switcher for light/dark modes.
+- **MongoDB Integration**: Store user data and messages securely with Mongoose schemas.
+- **API Endpoints**: Robust APIs for message management, user settings, and AI-driven features.
+- **Error Handling and UX**: Improved loading states, spinners, and toast notifications for a seamless experience.
+
+## Technologies
+
+- **Frontend**: Next.js 15.2.4, React, shadcn/ui, DaisyUI, Radix UI, next-themes
+- **Backend**: Next.js API Routes, Mongoose, MongoDB
+- **Authentication**: NextAuth.js, bcryptjs
+- **Validation**: Zod
+- **AI**: OpenAI API (GPT-3.5-turbo)
+- **Email**: Resend API with React email templates
+- **Utilities**: react-hook-form, dayjs, TypeScript
+
+## Installation
+
+To set up Secret Sprinkles locally, follow these steps:
+
+1. **Clone the Repository**:
+
+   ```bash
+   git clone https://github.com/panderonak/secret-sprinkles.git
+   ```
+
+2. **Navigate to the Project Directory**:
+
+   ```bash
+   cd secret-sprinkles
+   ```
+
+3. **Install Dependencies**:
+
+   ```bash
+   bun install
+   # or
+   npm install
+   ```
+
+4. **Set Up Environment Variables**:
+
+   ```bash
+   cp .env.sample .env.local
+   ```
+
+   Update `.env.local` with the required values:
+
+   ```env
+   MONGODB_URI=your_mongodb_connection_string
+   RESEND_API_KEY=your_resend_api_key
+   NEXTAUTH_SECRET=your_nextauth_secret
+   OPENAI_API_KEY=your_openai_api_key
+   NEXTAUTH_URL=http://localhost:3000
+   NEXT_PUBLIC_APP_URL=http://localhost:3000
+   ```
+
+5. **Run the Development Server**:
+
+   ```bash
+   bun dev
+   # or
+   npm run dev
+   ```
+
+6. **Access the Application**:
+
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## Usage
+
+### For Users
+
+1. **Sign Up**: Create an account with a username, email, and password. Verify your email using the OTP sent via Resend.
+2. **Get Your Public URL**: After signing in, access your dashboard to find your unique public URL.
+3. **Share Your URL**: Share the URL with others to receive anonymous messages.
+4. **View Messages**: Use the dashboard to view, accept, or delete messages. Toggle message acceptance settings as needed.
+5. **Use AI Suggestions**: When sending messages via a public URL, leverage AI-powered suggestions to craft creative content.
+
+## Configuration
+
+Secret Sprinkles requires the following environment variables in `.env.local`:
+
+```env
+MONGODB_URI=mongodb://localhost:27017/secret-sprinkles
+RESEND_API_KEY=your_resend_api_key
+NEXTAUTH_SECRET=your_nextauth_secret
+OPENAI_API_KEY=your_openai_api_key
+NEXTAUTH_URL=http://localhost:3000
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## API Routes
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Refer to the source code in `/src/app/api` for detailed endpoint specifications.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Contributing
 
-## Learn More
+We welcome contributions to Secret Sprinkles! To contribute:
 
-To learn more about Next.js, take a look at the following resources:
+1. Fork the repository.
+2. Create a feature or bugfix branch:
+   ```bash
+   git checkout -b feature/your-feature
+   ```
+3. Commit your changes:
+   ```bash
+   git commit -m "Add feature X"
+   ```
+4. Push to your fork:
+   ```bash
+   git push origin feature/your-feature
+   ```
+5. Open a pull request with a detailed description.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## License
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## Deploy on Vercel
+## Contact
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+For questions, feedback, or support, please:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Open an issue on GitHub: [https://github.com/panderonak/secret-sprinkles/issues](https://github.com/panderonak/secret-sprinkles/issues)
+- Contact the maintainer: _[Your preferred contact method]_
