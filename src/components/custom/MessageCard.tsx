@@ -26,6 +26,7 @@ import {
 
 import { Roboto } from "next/font/google";
 import dayjs from "dayjs";
+import React from "react";
 
 const roboto = Roboto({
   subsets: ["latin"],
@@ -37,10 +38,7 @@ type MessageCardProps = {
   onMessageDelete: (messageId: string) => void;
 };
 
-export default function MessageCard({
-  message,
-  onMessageDelete,
-}: MessageCardProps) {
+function MessageCard({ message, onMessageDelete }: MessageCardProps) {
   const handleDelete = async () => {
     const response = await axios.delete(`/api/delete-message/${message._id}`);
 
@@ -107,3 +105,5 @@ export default function MessageCard({
     </Card>
   );
 }
+
+export default React.memo(MessageCard);
