@@ -38,6 +38,9 @@ export default function page() {
 
   const form = useForm({
     resolver: zodResolver(acceptMessageSchema),
+    defaultValues: {
+      acceptMessages: true,
+    },
   });
 
   const { register, watch, setValue } = form;
