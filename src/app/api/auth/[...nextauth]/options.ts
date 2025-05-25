@@ -4,6 +4,7 @@ import dbConnection from "@/lib/dbConnection";
 import bcrypt from "bcryptjs";
 import UserModel from "@/models/user.models";
 import { JWT } from "next-auth";
+import { signInSchema } from "@/schemas/signInSchema";
 
 const authOptions: NextAuthOptions = {
   providers: [
@@ -19,6 +20,12 @@ const authOptions: NextAuthOptions = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials: any): Promise<any> {
+        const validatedFields = signInSchema.safeParse(credentials);
+
+        if (!validatedFields.success) {
+          throw new Error("The credentials don’t look right.");
+        }
+
         await dbConnection();
 
         try {
@@ -28,6 +35,7 @@ const authOptions: NextAuthOptions = {
               { username: credentials.identifier },
             ],
           });
+
           if (!user) throw new Error("No user found.");
 
           if (!user.isVerified)
