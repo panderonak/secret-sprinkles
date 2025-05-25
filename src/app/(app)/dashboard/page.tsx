@@ -163,6 +163,7 @@ export default function page() {
         </h2>
         <div className="flex items-center gap-3 rounded-lg py-4">
           <input
+            name="profileUrl"
             type="text"
             value={profileUrl}
             disabled
