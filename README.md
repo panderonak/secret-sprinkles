@@ -2,6 +2,8 @@
 
 Secret Sprinkles is a web platform where users can create accounts, receive a public URL to share with others, and collect anonymous messages. The platform enhances user experience with AI-powered message suggestions and provides a dashboard for users to view and manage their messages. Built with Next.js, Secret Sprinkles offers secure authentication, email verification, and a responsive, making it easy to send and receive anonymous feedback or messages.
 
+[Watch the demo on Twitter](https://x.com/panderonakdev/status/1926590816895619465/video/1)
+
 ## Table of Contents
 
 - [Features](#features)
