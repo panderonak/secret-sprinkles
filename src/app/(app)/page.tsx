@@ -7,7 +7,7 @@ export default function Home() {
   return (
     <div className="mx-auto max-w-7xl px-6 sm:px-10 lg:px-8 font-[family-name:var(--font-geist-sans)]">
       <main className="flex-grow flex flex-col items-center justify-center py-16">
-        <section className="text-center max-h-screen py-10 mb-16 rounded-3xl bg-accent-foreground">
+        <section className="text-center py-10 mb-16 rounded-3xl bg-accent-foreground">
           <h1 className="text-4xl md:text-6xl text-[#101010] font-extrabold leading-snug">
             Discover What Others Think —{" "}
             <span className="text-[#8c8c8c] font-medium">Anonymously.</span>
