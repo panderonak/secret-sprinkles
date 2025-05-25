@@ -96,6 +96,16 @@ export default function page() {
                 </FormItem>
               )}
             />
+            <div className="text-center mt-4">
+              <p>
+                <Link
+                  href="/verify-account"
+                  className="text-primary text-left hover:underline"
+                >
+                  Forgotten your password?
+                </Link>
+              </p>
+            </div>
             <Button
               className="relative bg-primary text-primary-foreground hover:bg-primary/80 focus:ring focus:ring-ring border"
               type="submit"
